@@ -38,6 +38,10 @@ public class BooksService {
     }
 
     public Book updateBook(String bookId, Book updatedBook) {
+        if (!"Available".equalsIgnoreCase(updatedBook.getAvailabilityStatus()) &&
+                !"Checked Out".equalsIgnoreCase(updatedBook.getAvailabilityStatus())) {
+            throw new IllegalArgumentException("Availability status must be either 'Available' or 'Checked Out' enter again correctly");
+        }
         return bookRepo.findById(bookId)
                 .map(existingBook -> {
                     existingBook.setTitle(updatedBook.getTitle());
