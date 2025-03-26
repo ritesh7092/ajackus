@@ -4,6 +4,7 @@ package com.Ajackus.library.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,8 @@ public class Book {
     @NotBlank(message = "Author can not be blank!")
     private String author;
     private String genre;
+
+    @NotBlank(message = "Availability status is required!")
+    @Pattern(regexp = "Available|Checked Out", message = "Availability status must be either 'Available' or 'Checked Out'")
     private String availabilityStatus;
 }
