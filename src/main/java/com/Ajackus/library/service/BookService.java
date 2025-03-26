@@ -37,4 +37,22 @@ public class BookService {
         return bookRepo.findByTitle(title);
     }
 
+    public Book updateBook(String bookId, Book updatedBook) {
+        return bookRepo.findById(bookId)
+                .map(existingBook -> {
+                    existingBook.setTitle(updatedBook.getTitle());
+                    existingBook.setAuthor(updatedBook.getAuthor());
+                    existingBook.setGenre(updatedBook.getGenre());
+                    existingBook.setAvailabilityStatus(updatedBook.getAvailabilityStatus());
+                    return bookRepo.save(existingBook);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Book not found with ID: " + bookId + "Enter correct bookId"));
+    }
+
+    public void deleteBook(String bookId) {
+        if (!bookRepo.existsById(bookId)) {
+            throw new IllegalArgumentException("Book not found with ID: " + bookId + "Enter correct bookId");
+        }
+        bookRepo.deleteById(bookId);
+    }
 }
