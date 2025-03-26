@@ -14,6 +14,14 @@ public class BookService {
     private BookRepo bookRepo;
 
     public Book addBook(Book book){
+        if (!"Available".equalsIgnoreCase(book.getAvailabilityStatus()) &&
+                !"Checked Out".equalsIgnoreCase(book.getAvailabilityStatus())) {
+            throw new IllegalArgumentException("Availability status must be either 'Available' or 'Checked Out' enter again correctly");
+        }
+
+        if (bookRepo.existsById(book.getBookId())) {
+            throw new IllegalArgumentException("Book ID must be unique enter different BookId");
+        }
         return bookRepo.save(book);
     }
 
